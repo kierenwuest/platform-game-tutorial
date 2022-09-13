@@ -1,15 +1,15 @@
 .body {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .controls {
-    position: absolute;
-    z-index: 10;
-    top: 150px;
-    left: 10px;
+  position: absolute;
+  z-index: 10;
+  top: 150px;
+  left: 10px;
 }
 
 /* canvas {

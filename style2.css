@@ -1,13 +1,29 @@
-body{
-    background: black;
+body {
+  background: black;
 }
 
-#second {
+#container {
     position: absolute;
-    border: 3px solid white;
     width: 928px;
-    height: 793px;
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
+
+    font-size: 20px;
+}
+
+#second {
+  position: relative;
+
+  width: 928px;
+  height: 793px;
+
+}
+
+#slider {
+    width: 100%;
+}
+
+p {
+    color: white;
 }
