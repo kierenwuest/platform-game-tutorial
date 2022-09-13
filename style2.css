@@ -3,13 +3,12 @@ body {
 }
 
 #container {
-    position: absolute;
-    width: 928px;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-
-    font-size: 20px;
+  position: absolute;
+  width: 928px;
+  transform: translate(-50%, -50%);
+  top: 25%;
+  left: 50%;
+  font-size: 20px;
 }
 
 #second {
@@ -17,13 +16,12 @@ body {
 
   width: 928px;
   height: 793px;
-
 }
 
 #slider {
-    width: 100%;
+  width: 100%;
 }
 
 p {
-    color: white;
+  color: white;
 }
