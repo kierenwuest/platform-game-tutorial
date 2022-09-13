@@ -113,7 +113,7 @@ const layer6 = new Layer(backgroundLayer6, 0.25, 0); //* Back Middle Trunks
 const layer7 = new Layer(backgroundLayer7, 0.2, 0); //* Back Lights
 const layer8 = new Layer(backgroundLayer8, 0.1, 0); //* Back Trunks
 const layer9 = new Layer(backgroundLayer9, 0.05, 0); //* Fog Trunks
-const layer10 = new Layer(backgroundLayer10, 0, 0); //* Light Blue Fill
+const layer10 = new Layer(backgroundLayer10, 0,); //* Light Blue Fill
 const layer11 = new Layer(backgroundLayer11, 0); //* 3 Tone Grad Fill
 
 const gameObjects = [
@@ -175,7 +175,8 @@ function animationLoop() {
     object.update();
     object.draw();
   });
-
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0,0,CANVAS_WIDTH, 280);
   requestAnimationFrame(animationLoop);
 }
 animationLoop();
