@@ -1,0 +1,17 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.controls {
+    position: absolute;
+    z-index: 10;
+    top: 150px;
+    left: 430px;
+}
+
+/* canvas {
+background-color: lightgray;
+    border: 1px solid black;
+} */
