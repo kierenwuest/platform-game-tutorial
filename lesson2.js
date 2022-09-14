@@ -11,40 +11,40 @@ const CANVAS_HEIGHT = (canvas.height = 793);
 let globalGameSpeed = 3;
 
 const backgroundLayer0 = new Image(); //* Ground Front
-backgroundLayer0.src = "/images/Layer00_9.png";
+backgroundLayer0.src = "images/Layer00_9.png";
 
 const backgroundLayer1 = new Image(); //* Ground Back
-backgroundLayer1.src = "/images/Layer01_8.png";
+backgroundLayer1.src = "images/Layer01_8.png";
 
 const backgroundLayer2 = new Image(); //* Tree Tops
-backgroundLayer2.src = "/images/Layer02_7.png";
+backgroundLayer2.src = "images/Layer02_7.png";
 
 const backgroundLayer3 = new Image(); //* Front Trunks
-backgroundLayer3.src = "/images/Layer03_6.png";
+backgroundLayer3.src = "images/Layer03_6.png";
 
 const backgroundLayer4 = new Image(); //* Front Lights
-backgroundLayer4.src = "/images/Layer04_Lights.png";
+backgroundLayer4.src = "images/Layer04_Lights.png";
 
 const backgroundLayer5 = new Image(); //* Front Middle Trunks
-backgroundLayer5.src = "/images/Layer05_5.png";
+backgroundLayer5.src = "images/Layer05_5.png";
 
 const backgroundLayer6 = new Image(); //* Back Middle Trunks
-backgroundLayer6.src = "/images/Layer06_4.png";
+backgroundLayer6.src = "images/Layer06_4.png";
 
 const backgroundLayer7 = new Image(); //* Back Lights
-backgroundLayer7.src = "/images/Layer07_Lights.png";
+backgroundLayer7.src = "images/Layer07_Lights.png";
 
 const backgroundLayer8 = new Image(); //* Back Trunks
-backgroundLayer8.src = "/images/Layer08_3.png";
+backgroundLayer8.src = "images/Layer08_3.png";
 
 const backgroundLayer9 = new Image(); //* Fog Trunks
-backgroundLayer9.src = "/images/Layer09_2.png";
+backgroundLayer9.src = "images/Layer09_2.png";
 
 const backgroundLayer10 = new Image(); //* Light Blue Fill
-backgroundLayer10.src = "/images/Layer10_1.png";
+backgroundLayer10.src = "images/Layer10_1.png";
 
 const backgroundLayer11 = new Image(); //* 3 Tone Grad Fill
-backgroundLayer11.src = "/images/Layer11_0.png";
+backgroundLayer11.src = "images/Layer11_0.png";
 
 window.addEventListener("load", function () {
   //! wrap the whole thing in this to load all the images first
