@@ -11,6 +11,7 @@
     <meta name="description" content="Learning game project" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style2.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/agate.min.css">
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -33,7 +34,165 @@
       <br>
       <br>
       <a href="index.html">Back</a>
+      <div id="codeblock" >
+        <h3>My Code:</h3>
+      <pre>
+      <code class="language-javascript">
+        /** @type {HTMLCanvasElement} */
+
+        //tutorial https://www.youtube.com/watch?v=GFO_txvwK_c&amp;t=2587s
+        //background images https://edermunizz.itch.io/free-pixel-art-forest
+        // 928 w x 793 h
+        
+        const canvas = document.getElementById(&quot;second&quot;);
+        const ctx = canvas.getContext(&quot;2d&quot;);
+        const CANVAS_WIDTH = (canvas.width = 928);
+        const CANVAS_HEIGHT = (canvas.height = 793);
+        let globalGameSpeed = 3;
+        
+        const backgroundLayer0 = new Image(); //* Ground Front
+        backgroundLayer0.src = &quot;images/Layer00_9.png&quot;;
+        
+        const backgroundLayer1 = new Image(); //* Ground Back
+        backgroundLayer1.src = &quot;images/Layer01_8.png&quot;;
+        
+        const backgroundLayer2 = new Image(); //* Tree Tops
+        backgroundLayer2.src = &quot;images/Layer02_7.png&quot;;
+        
+        const backgroundLayer3 = new Image(); //* Front Trunks
+        backgroundLayer3.src = &quot;images/Layer03_6.png&quot;;
+        
+        const backgroundLayer4 = new Image(); //* Front Lights
+        backgroundLayer4.src = &quot;images/Layer04_Lights.png&quot;;
+        
+        const backgroundLayer5 = new Image(); //* Front Middle Trunks
+        backgroundLayer5.src = &quot;images/Layer05_5.png&quot;;
+        
+        const backgroundLayer6 = new Image(); //* Back Middle Trunks
+        backgroundLayer6.src = &quot;images/Layer06_4.png&quot;;
+        
+        const backgroundLayer7 = new Image(); //* Back Lights
+        backgroundLayer7.src = &quot;images/Layer07_Lights.png&quot;;
+        
+        const backgroundLayer8 = new Image(); //* Back Trunks
+        backgroundLayer8.src = &quot;images/Layer08_3.png&quot;;
+        
+        const backgroundLayer9 = new Image(); //* Fog Trunks
+        backgroundLayer9.src = &quot;images/Layer09_2.png&quot;;
+        
+        const backgroundLayer10 = new Image(); //* Light Blue Fill
+        backgroundLayer10.src = &quot;images/Layer10_1.png&quot;;
+        
+        const backgroundLayer11 = new Image(); //* 3 Tone Grad Fill
+        backgroundLayer11.src = &quot;images/Layer11_0.png&quot;;
+        
+        window.addEventListener(&quot;load&quot;, function () {
+          //! wrap the whole thing in this to load all the images first
+        
+          const slider = document.getElementById(&quot;slider&quot;);
+          slider.value = globalGameSpeed;
+          const showScrollSpeed = document.getElementById(&quot;showScrollSpeed&quot;);
+          showScrollSpeed.innerHTML = globalGameSpeed;
+          slider.addEventListener(&quot;change&quot;, function (e) {
+            globalGameSpeed = e.target.value;
+            showScrollSpeed.innerHTML = e.target.value;
+          });
+        
+          class Layer {
+            // classes start with capital and are like a blueprint, for similar qualites with different values. 
+            // Requires a mandatory construtor method()
+            // in a class the constructor Method is a function attached to an Object.
+            //When the class is called it will assign properties to a new blank object based on the blueprint in the constructor
+            //runs once per Object everytme the class is called with the 'new' keyword
+            constructor(image, speedMod, yOffset) {
+              this.x = 0;
+              this.y = 0;
+              this.yOffset = yOffset; // used to adjust layer height: positive is down, negative is up
+              this.width = 928;
+              this.height = 793;
+              this.image = image; // this is getting passed from the constructor (argument)
+              this.speedMod = speedMod; // as above
+              this.speed = globalGameSpeed * this.speedMod; // this ties it all to the global globalGameSpeed var
+            }
+            update() {
+              // and update method in the class which updates values
+              this.speed = globalGameSpeed * this.speedMod;
+              if (this.x &lt;= -this.width) {
+                // this is detecting the edge and reset to 0
+                this.x = 0;
+              }
+              this.x = this.x - this.speed; // moving the image to the left. Could switch direction with + 
+            }
+            draw() {
+              // draws stuff on the canvas
+              ctx.drawImage(
+                this.image,
+                this.x,
+                this.y + this.yOffset,
+                this.width + 2,
+                this.height
+              );
+              ctx.drawImage(
+                this.image,
+                this.x + this.width,
+                +this.yOffset,
+                this.width,
+                this.height
+              ); // this replaces the paris of draw image below
+            }
+          }
+        
+          // These will set the layer relative speeds by creating new Objects from the class to be drawn in the animation loop
+        
+          const layer0 = new Layer(backgroundLayer0, 1, 15); //* Ground Front
+          const layer1 = new Layer(backgroundLayer1, 0.85, 0); //* Ground Back
+          const layer2 = new Layer(backgroundLayer2, 0.8, 0); //* Tree Tops
+          const layer3 = new Layer(backgroundLayer3, 0.7, 0); //* Front Trunks
+          const layer4 = new Layer(backgroundLayer4, 0.5, 0); //* Front Lights
+          const layer5 = new Layer(backgroundLayer5, 0.45, 0); //* Front Middle Trunks
+          const layer6 = new Layer(backgroundLayer6, 0.25, 0); //* Back Middle Trunks
+          const layer7 = new Layer(backgroundLayer7, 0.2, 0); //* Back Lights
+          const layer8 = new Layer(backgroundLayer8, 0.1, 0); //* Back Trunks
+          const layer9 = new Layer(backgroundLayer9, 0.05, 0); //* Fog Trunks
+          const layer10 = new Layer(backgroundLayer10, 0); //* Light Blue Fill
+          const layer11 = new Layer(backgroundLayer11, 0); //* 3 Tone Grad Fill
+        
+          const gameObjects = [
+            layer11,
+            layer10,
+            layer9,
+            layer8,
+            layer7,
+            layer6,
+            layer5,
+            layer4,
+            layer3,
+            layer2,
+            layer1,
+            layer0,
+          ]; // the order of this needs to be right to left
+        
+          function animationLoop() {
+            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        
+            gameObjects.forEach((object) =&gt; {
+              //!! calls the update and draws from each array class object!
+              object.update();
+              object.draw();
+            });
+            ctx.fillStyle = &quot;black&quot;;
+            ctx.fillRect(0, 0, CANVAS_WIDTH, 280);
+            requestAnimationFrame(animationLoop);
+          }
+          animationLoop();
+        });
+        
+        </code></pre>
     </div>
+    </div>
+
     <script src="lesson2.js" async defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
   </body>
 </html>

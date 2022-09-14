@@ -1,14 +1,22 @@
 body {
   background: black;
+  color: white;
+
 }
 
 #container {
-  position: absolute;
-  width: 928px;
-  transform: translate(-50%, -50%);
-  top: 25%;
-  left: 50%;
-  font-size: 20px;
+    position: absolute;
+    width: 928px;
+    transform: translate(-50%, -50%);
+    top: 20%;
+    left: 50%;
+    font-size: 20px;
+   
+}
+
+#codeblock {
+    position: absolute;
+    width: 928px;
 }
 
 #second {
@@ -16,12 +24,19 @@ body {
 
   width: 928px;
   height: 793px;
+
 }
 
 #slider {
-  width: 100%;
+    width: 100%;
 }
 
-p {
-  color: white;
+pre {
+    font-size: small;
+    overflow-wrap: break-word;
+}
+
+code {
+    overflow-wrap: break-word;
+}
 }

@@ -11,6 +11,7 @@
     <meta name="description" content="Learning game project" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style1.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/github.min.css">
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -45,7 +46,257 @@
       <br />
       <br />
       <a href="index.html">Back</a>
+      <br />
+      <br />
+      <div id="codeblock" >
+        <p>My Code:</p>
+      <pre>
+      <code class="language-javascript">
+        /** @type {HTMLCanvasElement} */ //This give VSCode Intellisense the canvas context methods
+
+        let playerAnimState = &quot;idle&quot;;
+        const dropdown = document.getElementById(&quot;animations&quot;);
+        dropdown.addEventListener(&quot;change&quot;, function (event) {
+          playerAnimState = event.target.value;
+        });
+        const canvas = document.getElementById(&quot;first&quot;);
+        const ctx = canvas.getContext(&quot;2d&quot;);
+        
+        // console.log(ctx); // Looks at all the particulars of canvas on the page
+        
+        const ctxWidth = (canvas.width = 600); // Without this the default canvas xy is 300 x 150 for some reason
+        const ctxHeight = (canvas.height = 600);
+        
+        const charImage = new Image();
+        charImage.src = &quot;images/Ranger_288x128_SpriteSheet.png&quot;; // https://chierit.itch.io/elementals-leaf-ranger
+        // idle
+        // run
+        // jumpUp
+        // jumpUpLoop
+        // jumpDown
+        // jumpDownLoop
+        // jumpAtk
+        // jumpAtkAction
+        // roll
+        // slide
+        // arrowStab
+        // shoot
+        // shootUpMany
+        // shootPower
+        // blockRoot
+        // takeHit
+        // death
+        
+        const spriteWidth = 288;
+        const spriteHeight = 128;
+        
+        // let frameX = 0; removed now animationStates is working
+        // let frameY = 0; removed now animationStates is working
+        
+        let gameframe = 0;
+        const staggerFrames = 4.5; // lower number is faster controls animationLoop speed
+        
+        // trying to achieve an array like this for a map of the xy crop frames of each animation set
+        // spriteAnimations = [
+        //     &quot;idle&quot; = {
+        //         location: [
+        //             { x: 0 y: 0 },
+        //             { x: 288, y: 0 },
+        //             { x: 288*2, y: 0 },
+        //             { x: 288*3, y: 0 }
+        //             //etc per line of frames
+        //         ]
+        //     },
+        
+        //     &quot;jump&quot; = {
+        //         location: [
+        //             { x: 0 y: 128 },
+        //             { x: 288, y: 128 },
+        //             { x: 288*2, y: 128 },
+        //             { x: 288*3, y: 128 }
+        //             //etc
+        //         ]
+        //     }
+        // ];
+        
+        const spriteAnimations = []; // array for sprites line frames(columns) and rows
+        
+        const animationStates = [
+          // simple map for the sprite sheet actions and numbr of frames
+          {
+            name: &quot;idle&quot;,
+            frames: 12,
+          },
+        
+          {
+            name: &quot;run&quot;,
+            frames: 10,
+          },
+        
+          {
+            name: &quot;jumpUp&quot;,
+            frames: 22,
+          },
+        
+          {
+            name: &quot;jumpUpLoop&quot;,
+            frames: 3,
+          },
+        
+          {
+            name: &quot;jumpDown&quot;,
+            frames: 22,
+          },
+        
+          {
+            name: &quot;jumpDownLoop&quot;,
+            frames: 3,
+          },
+        
+          {
+            name: &quot;jumpAtk&quot;,
+            frames: 22,
+          },
+        
+          {
+            name: &quot;jumpAtkAction&quot;,
+            frames: 10,
+          },
+        
+          {
+            name: &quot;roll&quot;,
+            frames: 8,
+          },
+        
+          {
+            name: &quot;slide&quot;,
+            frames: 13,
+          },
+        
+          {
+            name: &quot;arrowStab&quot;,
+            frames: 10,
+          },
+        
+          {
+            name: &quot;shoot&quot;,
+            frames: 15,
+          },
+        
+          {
+            name: &quot;shootUpMany&quot;,
+            frames: 12,
+          },
+        
+          {
+            name: &quot;shootPower&quot;,
+            frames: 17,
+          },
+        
+          {
+            name: &quot;blockRoot&quot;,
+            frames: 19,
+          },
+        
+          {
+            name: &quot;takeHit&quot;,
+            frames: 6,
+          },
+        
+          {
+            name: &quot;death&quot;,
+            frames: 19,
+          },
+        ];
+        
+        animationStates.forEach((state, index) =&gt; {
+          let frames = {
+            /// setting let frames to an object {} this should be the number of animation frames in the row
+            location: [],
+          };
+          for (let j = 0; j &lt; state.frames; j++) {
+            // put the index of the animate state into array
+            let positionX = j * spriteWidth; // for each for loop adding the 288 to the next array item - this is calculating the x's for the crop
+            let positionY = index * spriteHeight; // for each index (the state) multiplying the height 128 for the row - this is calculating the y's for the crop
+            frames.location.push({ x: positionX, y: positionY }); // the push method inserts the for loop variable calculations and pushes them in a litte co-ord object {} into the location array
+          }
+          spriteAnimations[state.name] = frames; //this is creating a new key value in the blank array (up top) to look like the sprite animations structure as designed
+        });
+        
+        console.log(spriteAnimations); //! this tests the result
+        // console log result
+        // [idle: {&hellip;}, run: {&hellip;}]
+        // idle:
+        // location: Array(12)
+        // 0 : {x: 0, y: 0}
+        // 1 : {x: 288, y: 0}
+        // 2 : {x: 576, y: 0}
+        // 3 : {x: 864, y: 0}
+        // 4 : {x: 1152, y: 0}
+        // 5 : {x: 1440, y: 0}
+        // 6 : {x: 1728, y: 0}
+        // 7 : {x: 2016, y: 0}
+        // 8 : {x: 2304, y: 0}
+        // 9 : {x: 2592, y: 0}
+        // 10 : {x: 2880, y: 0}
+        // 11 : {x: 3168, y: 0}
+        // length : 12
+        //
+        // run :
+        // location : Array(10)
+        // 0 : {x: 0, y: 128}
+        // 1 : {x: 288, y: 128}
+        // 2 : {x: 576, y: 128}
+        // 3 : {x: 864, y: 128}
+        // 4 : {x: 1152, y: 128}
+        // 5 : {x: 1440, y: 128}
+        // 6 : {x: 1728, y: 128}
+        // 7 : {x: 2016, y: 128}
+        // 8 : {x: 2304, y: 128}
+        // 9 : {x: 2592, y: 128}
+        // length:  10
+        //! notice the calculated x and y postions. spriteAnimations ARRAY[], which was empty, has a 'state' name OBJECT{}, and location ARRAY[] containing little xy OBJECTS{}
+        //! The animationStates.forEach method did this, from the animationStates ARRAY [] map with the name and frames defined in it above in the let vars. - setting the rest of the states in this array will then calculate all the animation frame sets as they are defined in the let ARRAY
+        
+        // ------------------ Animation Canvas Loop ------------------ //
+        
+        function animationLoop() {
+          ctx.clearRect(0, 0, ctxWidth, ctxHeight);
+          ctx.fillStyle = &quot;lightgrey&quot;;
+          ctx.fillRect(0, 0, 288, 128);
+          let position =
+            Math.floor(gameframe / staggerFrames) %
+            spriteAnimations[playerAnimState].location.length; //gameframe position - only integers and modulous to make end frame 1?  https://youtu.be/GFO_txvwK_c?t=1443
+          let frameX = spriteWidth * position;
+          let frameY = spriteAnimations[playerAnimState].location[position].y;
+          // ctx.drawImage(imagesrc,dx,dy, dw , dh ); // 5 arg drawImage is used to draw images
+          // ctx.drawImage(imagesrc,sx,sy, sw , sh ,dx,dy, dw , dh ); // 9 arg drawImage is used to position (d Destination/Draw) and cut/crop with the (s Source) images - sx sy for frame position
+          ctx.drawImage(
+            charImage,
+            frameX,
+            frameY,
+            spriteWidth,
+            spriteHeight,
+            0,
+            0,
+            spriteWidth,
+            spriteHeight
+          );
+          //ctx.strokeRect(0,0, 288 , 128);
+          // if (gameframe % staggerFrames == 0) { // inserts gameframes - primative way
+          // if (frameX &lt; 11) frameX++; // animates the sprite frame if (up to end frame) incrments by one
+          // else frameX = 0;} // reset to 0 at end of frames
+          gameframe++; // inserts gameframes
+          requestAnimationFrame(animationLoop);
+        }
+        
+        animationLoop();
+        
+        </code></pre>
+    </div>
     </div>
     <script src="lesson1.js" async defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
   </body>
 </html>
