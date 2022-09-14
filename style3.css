@@ -5,17 +5,13 @@ body {
 }
 
 #third1 {
+    margin: 40px;
     border: 2px solid black;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50% , -50%);
     width: 928px;
     height: 793px;
-
 }
 
 #codeblock {
-    position: absolute;
-    top: 65%;
+    font-size: small;
+    overflow-wrap: break-word;
 }
