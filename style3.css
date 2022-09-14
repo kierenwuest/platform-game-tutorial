@@ -1,0 +1,21 @@
+body {
+    font-size: 20px;
+    font-family: 'VT323', monospace; 
+    font-size: larger
+}
+
+#third1 {
+    border: 2px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    width: 928px;
+    height: 793px;
+
+}
+
+#codeblock {
+    position: absolute;
+    top: 65%;
+}
