@@ -5,9 +5,9 @@ body {
 }
 
 #third1 {
-    margin: 40px;
+    /* margin: 40px; */
     border: 2px solid black;
-    width: 928px;
+    width: 950px;
     height: 793px;
 }
 
