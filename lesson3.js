@@ -16,28 +16,45 @@ CANVAS_HEIGHT = canvas.height = 793;
 // } 
 //! Now turn this object into a 'factory' which is a class, which can make multiples when we call it based on the blueprint we give it
 
-const numberOfEntities = 20;
+const numberOfEntities = 200;
 const entityArray = [];
+
+//TODO Use images
+const entityImage = new Image();
+entityImage.src = 'images/BlueBird.png';
+let gameFrame = 0;
 
 class Entity { // classes are new version of older 'prototypes' which do the same thing.
     constructor(){
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.width = 64;
-        this.height = 64;
-        this.speed = Math.random() * 4 - 2; //add a new parameter 
+        // this.speed = Math.random() * 4 - 2; //add a new parameter 
                 //? Math.random() * 4 - 2; this is a format to do a random number between -2 and +2
                 //? [Math.random() * 4] this part creats a number between 0-4
                 //? [- 2] this part defines where to start from. -2 + [0-4 rand] // = [-2 rand +2] 
+        this.spriteWidth = 32;
+        this.spriteHeight = 32;
+        this.imageScale = Math.random() * 1.3 + 0.2; //* use this number to scale size   
+        this.width = this.spriteWidth * this.imageScale ; 
+        this.height = this.spriteHeight * this.imageScale ; 
+        this.frame = 0;
+        this.flapSpeed = Math.floor(Math.random() * 3 + 2);
     }
     update(){ // this is creating a method that can be used and is shared by the created objects (new) going to use this for movement in animation loop
         // this.x++; // replace this to add speed
         // this.y++;
-        this.x += this.speed; // using += https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Addition_assignment
-        this.y += this.speed;
+        // this.x += this.speed; // using += https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Addition_assignment
+        // this.y += this.speed;
+        this.x -= Math.random() * 4 - 1.5;
+        this.y -= Math.random() * 2 - 0.5;
+        //TODO Animate the sprite
+        //! using a ternary operator | given ? when : then ; | the simplest if else syntax
+        if(gameFrame % this.flapSpeed === 0 ){ //* This says if the divisible remainder of the gameFrame is 0 then run the animation advance for every second animationLoop() - change speed by the % integer
+            this.frame >= 2 ? this.frame = 0 : this.frame++;
+        }
     }
     draw(){ //taking what we would draw int he animation loop anf d putting it in here as a method too
-        ctx.fillRect(this.x, this.y, this.width , this.height);
+        ctx.drawImage(entityImage, this.frame*this.spriteWidth , 0 , this.spriteWidth , this.spriteHeight , this.x,this.y,this.width,this.height); //! ( crop 4 , draw 4)
     } 
 }
 
@@ -57,10 +74,11 @@ function animationLoop() {
     //ctx.fillRect(entity1.x, entity1.y, entity1.width , entity1.height); //entity1.parameter gets the value from the defined object above
     //? how to call the methods (update() and draw()) into this animation loop, so they animate?
     //! use the forEach method on the array with a function (use the arrow funtion =>)
-    entityArray.forEach(entity => { //* make a function here called entitiy that does the methods
+    entityArray.forEach(entity => { //* make a function here called entity that does the methods
         entity.draw();
         entity.update();
     });
+    gameFrame++;
     requestAnimationFrame(animationLoop);
 }
 
