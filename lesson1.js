@@ -1,10 +1,22 @@
-/** @type {HTMLCanvasElement} */ //This give VSCode Intellisense the canvas context methods
+/** @type {HTMLCanvasElement} */ //This gives VSCode Intellisense the canvas context methods
 
-let playerAnimState = "idle";
+let playerAnimState = "idle"; // page control action
 const dropdown = document.getElementById("animations");
 dropdown.addEventListener("change", function (event) {
   playerAnimState = event.target.value;
 });
+
+checkbox = document.getElementById("checkbox");  // page control direction https://stackoverflow.com/a/53600488/19920741
+checkbox.addEventListener("change", (e) => {
+  if (e.target.checked) {
+    charDirection = "right";
+  } else {
+    charDirection = "left";
+  }
+});
+
+let charDirection = "right";
+
 const canvas = document.getElementById("first");
 const ctx = canvas.getContext("2d");
 
@@ -205,7 +217,6 @@ console.log(spriteAnimations); //! this tests the result
 // ------------------ Animation Canvas Loop ------------------ //
 
 function animationLoop() {
-  ctx.clearRect(0, 0, ctxWidth, ctxHeight);
   ctx.fillStyle = "lightgrey";
   ctx.fillRect(0, 0, 288, 128);
   let position =
@@ -215,17 +226,37 @@ function animationLoop() {
   let frameY = spriteAnimations[playerAnimState].location[position].y;
   // ctx.drawImage(imagesrc,dx,dy, dw , dh ); // 5 arg drawImage is used to draw images
   // ctx.drawImage(imagesrc,sx,sy, sw , sh ,dx,dy, dw , dh ); // 9 arg drawImage is used to position (d Destination/Draw) and cut/crop with the (s Source) images - sx sy for frame position
-  ctx.drawImage(
-    charImage,
-    frameX,
-    frameY,
-    spriteWidth,
-    spriteHeight,
-    0,
-    0,
-    spriteWidth,
-    spriteHeight
-  );
+
+  if (charDirection === "left") { // this looks at the direction boolean control and will horizontal flip the direction of the draw using: .save .translate .scale and .restore methods
+    ctx.save();
+    ctx.translate(spriteWidth, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(
+      charImage,
+      frameX,
+      frameY,
+      spriteWidth,
+      spriteHeight,
+      0,
+      0,
+      spriteWidth,
+      spriteHeight
+    );
+    ctx.restore();
+  } else {
+    ctx.drawImage(
+      charImage,
+      frameX,
+      frameY,
+      spriteWidth,
+      spriteHeight,
+      0,
+      0,
+      spriteWidth,
+      spriteHeight
+    );
+  }
+
   //ctx.strokeRect(0,0, 288 , 128);
   // if (gameframe % staggerFrames == 0) { // inserts gameframes - primative way
   // if (frameX < 11) frameX++; // animates the sprite frame if (up to end frame) incrments by one
