@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Entity Movement Patterns 3</title>
+        <meta name="description" content="Learning game project">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style3.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/github.min.css">
+        <style> @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap'); </style>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="container">
+            <a href="index.html">Home</a>
+            <canvas id="third1"></canvas>
+            <a href="Lesson3_3.html">Next</a>
+            <div class="playControls">
+                <p>Angle X: <span id="showXAngle"></span></p>
+                <input
+                  type="range"
+                  min="45"
+                  max="360"
+                  value="360"
+                  step="45"
+                  class="slider"
+                  id="xASlider"
+                />
+                <div class="switch">
+                <label><span id="xSinCos"> </label><input id="xMathType" type="checkbox" checked />
+                </div>
+                
+                <p>Angle Y: <span id="showYAngle"></span></p>
+                <input
+                  type="range"
+                  min="45"
+                  max="360"
+                  value="360"
+                  step="45"
+                  class="slider"
+                  id="yASlider"
+                />
+                <div class="switch">
+                <label><span id="ySinCos"> </label><input id="yMathType" type="checkbox" checked />
+                </div>
+                <p>Move Speed: <span id="move-speed"></span></p>
+                <input
+                  type="range"
+                  min="1"
+                  max="10"
+                  value="2"
+                  class="slider"
+                  id="speedSlider"
+                />
+            </div>
+            <p>My Code:</p>
+            <div id="codeblock" >
+                <pre><code class="language-javascript">
+
+                </code></pre>
+            </div>
+        <script src="lesson3_3.js" async defer></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </body>
+</html>

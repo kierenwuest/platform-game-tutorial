@@ -5,7 +5,7 @@
 const canvas = document.getElementById('third1');
 const ctx = canvas.getContext('2d');
 
-CANVAS_WIDTH = canvas.width = 950;
+CANVAS_WIDTH = canvas.width = 928;
 CANVAS_HEIGHT = canvas.height = 793;
 
 // entity1 = { // curly braces make this name an object
@@ -16,7 +16,7 @@ CANVAS_HEIGHT = canvas.height = 793;
 // } 
 //! Now turn this object into a 'factory' which is a class, which can make multiples when we call it based on the blueprint we give it
 
-const numberOfEntities = 60;
+const numberOfEntities = 150;
 const entityArray = [];
 
 //TODO Use images
