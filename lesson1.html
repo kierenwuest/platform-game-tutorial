@@ -11,8 +11,13 @@
     <meta name="description" content="Learning game project" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style1.css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/github.min.css">
-    <style> @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap'); </style>
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/github.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+    </style>
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -24,8 +29,10 @@
 
     <canvas id="first"></canvas>
     <div class="controls">
-        <label class="switch"><input id="checkbox" type="checkbox" checked />    <div></div>
-        </label>
+      <label class="switch"
+        ><input id="checkbox" type="checkbox" checked />
+        <div></div>
+      </label>
       <label>:Direction || Animation:</label>
       <select id="animations" name="animations">
         <option value="idle">Idle</option>
@@ -49,11 +56,12 @@
       <br />
       <br />
       <a href="index.html">Back</a>
+      <a href="Lesson2.html">Next</a>
       <br />
       <br />
-      <div id="codeblock" >
+      <div id="codeblock">
         <p>My Code:</p>
-      <pre>
+        <pre>
       <code class="language-javascript">
 /** @type {HTMLCanvasElement} */ //This gives VSCode Intellisense the canvas context methods
 
@@ -324,10 +332,12 @@ function animationLoop() {
 
 animationLoop();
         </code></pre>
-    </div>
+      </div>
     </div>
     <script src="lesson1.js" async defer></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <script>
+      hljs.highlightAll();
+    </script>
   </body>
 </html>

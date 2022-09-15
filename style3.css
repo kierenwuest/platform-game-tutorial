@@ -1,30 +1,29 @@
 body {
-    font-size: 20px;
-    font-family: 'VT323', monospace; 
-    font-size: larger
+  font-size: 20px;
+  font-family: "VT323", monospace;
+  font-size: larger;
 }
 
 #third1 {
-    /* margin: 40px; */
-    border: 2px solid black;
-    width: 928px;
-    height: 793px;
+  /* margin: 40px; */
+  border: 2px solid black;
+  width: 928px;
+  height: 793px;
 }
 
 .playControls {
-    width: 980px;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid black;
+  width: 980px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid black;
 }
 
 .switch {
-    padding-right: 80px;
+  padding-right: 80px;
 }
 
 #codeblock {
-    font-size: small;
-    overflow-wrap: break-word;
+  font-size: small;
+  overflow-wrap: break-word;
 }
-
