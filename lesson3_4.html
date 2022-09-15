@@ -20,14 +20,108 @@
         <![endif]-->
         <div id="container">
             <a href="index.html">Home</a>
-            <canvas id="third4"></canvas>
+            <canvas id="third1"></canvas>
             <a href="lesson3_4.html">Next</a>
             <!-- <div class="playControls">
             </div> -->
             <p>My Code:</p>
             <div id="codeblock" >
                 <pre><code class="language-javascript">
-
+            /** @type {HTMLCanvasElement} */
+            //tutorial https://youtu.be/GFO_txvwK_c?t=6740
+            //entity images https://elthen.itch.io/2d-pixel-art-jellyfish-sprites
+            
+            const canvas = document.getElementById(&quot;third1&quot;);
+            const ctx = canvas.getContext(&quot;2d&quot;);
+            CANVAS_WIDTH = canvas.width = 928;
+            CANVAS_HEIGHT = canvas.height = 793;
+            
+            //https://developer.mozilla.org/en-US/docs/Web/API/Element/mousemove_event
+            let mx = canvas.addEventListener(&quot;mousemove&quot;, (e) =&gt; {
+                mx = e.offsetX;
+            }); 
+            let my = canvas.addEventListener(&quot;mousemove&quot;, (e) =&gt; {
+                my = e.offsetY;
+            });
+            
+            let numberOfEntities = 200;
+            const entityArray = [];
+            
+            let gameFrame = 0;
+            
+            //TODO have entities move out when in 200x200 mouse area
+            //TODO have entities not move into the 200x200 mouse area
+            
+            class Entity {
+                constructor() {
+                this.image = new Image();
+                this.image.src = &quot;images/Jellyfish.png&quot;; // 32x32 224x160
+                this.speed = Math.random() * 4 + 1;
+                this.spriteWidth = 32;
+                this.spriteHeight = 32;
+                this.imageScale = Math.random() * 2 + 0.7; //* use this number to scale size
+                this.width = this.spriteWidth * this.imageScale;
+                this.height = this.spriteHeight * this.imageScale;
+                this.x = Math.random() * (canvas.width - this.width); // create them in a posotion
+                this.y = Math.random() * (canvas.height - this.height);
+                this.newX = Math.random() * (canvas.width - this.width); // here is a new position
+                this.newY = Math.random() * (canvas.height - this.height);
+                this.mx = mx;
+                this.my = my;
+                this.frame = 0;
+                this.flapSpeed = Math.floor(Math.random() * 4 + 2); //Speed of sprite animation framerate
+                this.spriteRow = Math.floor(Math.random() * 4); // choose animation from sprite sheet
+                this.interval = Math.floor(Math.random() * 900 + 60); // have the entities move at their own individual moment
+                }
+                update() {
+                if (gameFrame % this.interval === 0) {
+                    // this means every x number of frames in the animLoop (gameFrame % x === 0)
+                    this.newX = Math.random() * (canvas.width - this.width); // every interval update these coords
+                    this.newY = Math.random() * (canvas.height - this.height);
+                }
+                let distX = this.x - this.newX; // calc the distance between the coords
+                let distY = this.y - this.newY;
+                this.x -= distX * 0.02; // this moves the entities and the * x; number slows the transition so we can see the movement
+                this.y -= distY * 0.02;
+                if (this.x + this.width &lt; 0) this.x = canvas.width;
+                //animate sprites
+                let fourOrSeven = 4;
+                if (this.spriteRow === 3) fourOrSeven = 2;
+                if (gameFrame % this.flapSpeed === 0) {
+                    this.frame &gt;= fourOrSeven ? (this.frame = 0) : this.frame++;
+                }
+                }
+                draw() {
+                ctx.drawImage(
+                    this.image,
+                    this.frame * this.spriteWidth,
+                    this.spriteHeight * this.spriteRow,
+                    this.spriteWidth,
+                    this.spriteHeight,
+                    this.x,
+                    this.y,
+                    this.width,
+                    this.height
+                );
+                }
+            }
+            
+            for (let i = 0; i &lt; numberOfEntities; i++) {
+                entityArray.push(new Entity());
+            }
+            
+            function animationLoop() {
+                ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+                ctx.strokeRect(mx - 100, my - 100, 200, 200);
+                entityArray.forEach((entity) =&gt; {
+                entity.draw();
+                entity.update();
+                });
+                gameFrame++;
+                requestAnimationFrame(animationLoop);
+            }
+            
+            animationLoop();                    
                 </code></pre>
             </div>
         <script src="lesson3_4.js" async defer></script>
