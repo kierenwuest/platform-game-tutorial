@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Collision Detection Project</title>
+        <meta name="description" content="Learning game project">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style3.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/github.min.css">
+        <style> @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap'); </style>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="container">
+            <a href="index.html">Home</a>
+            <canvas class="clear" id="third1"></canvas>
+            <a href="lesson4_1.html">Next</a>
+            <!-- <div class="playControls">
+            </div> -->
+            <p>My Code:</p>
+            <div id="codeblock">
+                <pre><code class="language-javascript">
+    /** @type {HTMLCanvasElement} */
+    //https://www.youtube.com/watch?v=GFO_txvwK_c&amp;t=8654s
+    // Sprites: https://limofeus.itch.io/pixel-simulations
+    
+    // Sounds: https://freesound.org/people/nfrae/sounds/167242/
+    
+    const canvas = document.getElementById(&quot;third1&quot;);
+    const ctx = canvas.getContext(&quot;2d&quot;);
+    CANVAS_WIDTH = canvas.width = 928;
+    CANVAS_HEIGHT = canvas.height = 793;
+    
+    const explosions = [];
+    
+    class Explosion {
+        constructor(x, y) {
+        this.spritewidth = 64;
+        this.spriteheight = 64;
+        this.spriteScale = 2.4;
+        this.width = this.spritewidth * this.spriteScale;
+        this.height = this.spriteheight * this.spriteScale;
+        this.x = x;
+        this.y = y;
+        this.image = new Image();
+        this.image.src = &quot;images/firework.png&quot;;
+        this.frame = 0;
+        this.timer = 0;
+        this.angle = Math.random() * 6.2;
+        this.sound = new Audio();
+        this.sound.src = &quot;images/firework.mp3&quot;;
+        this.soundb = new Audio();
+        this.soundb.src = &quot;images/explodeBass.mp3&quot;;
+        this.soundl = new Audio();
+        this.soundl.src = &quot;images/launch.mp3&quot;;
+        this.soundw = new Audio();
+        this.soundw.src = &quot;images/whistle.mp3&quot;;
+        this.originx = CANVAS_WIDTH * 0.5;
+        this.originy = CANVAS_HEIGHT;
+        }
+        update() {
+        if (this.frame === 0) this.sound.play(); //play the sound once
+        if (this.frame === 4) this.soundb.play(); //play the sound once
+        this.timer++;
+        if (this.timer % 3 === 0) {
+            this.frame++;
+        }
+        }
+        draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.drawImage(
+            this.image,
+            this.spritewidth * this.frame,
+            0,
+            this.spritewidth,
+            this.spriteheight,
+            0 - this.width * 0.5,
+            0 - this.height * 0.5,
+            this.width,
+            this.height
+        );
+        ctx.restore();
+        }
+    }
+    
+    canvas.addEventListener(&quot;click&quot;, function (e) {
+        createAnimation(e);
+    });
+    
+    // canvas.addEventListener('mousemove', function (e){
+    //     createAnimation(e);
+    // });
+    
+    function createAnimation(e) {
+        let mx = e.offsetX;
+        let my = e.offsetY;
+        explosions.push(new Explosion(mx, my));
+    }
+    
+    function animationLoop() {
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        for (let i = 0; i &lt; explosions.length; i++) {
+        explosions[i].update();
+        explosions[i].draw();
+        if (explosions[i].frame &gt; 29) {
+            explosions.splice(i, 1);
+            i--;
+        }
+        }
+        requestAnimationFrame(animationLoop);
+    }
+    
+    animationLoop();                                
+                </code></pre>
+
+        <script src="scripts/lesson4_1.js" async defer></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </body>
+</html>

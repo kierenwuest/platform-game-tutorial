@@ -11,6 +11,15 @@ body {
   height: 793px;
 }
 
+.clear {
+  background-image: url('/images/pbg.jpg');
+  background-color: black; /* Used if the image is unavailable */
+  height: 793px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
 .playControls {
   width: 980px;
   display: flex;

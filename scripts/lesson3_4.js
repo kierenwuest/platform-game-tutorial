@@ -22,6 +22,7 @@ let gameFrame = 0;
 
 //TODO have entities move out when in 200x200 mouse area
 //TODO have entities not move into the 200x200 mouse area
+// mouse area https://codemanu.itch.io/pixelart-effect-pack
 
 class Entity {
   constructor() {

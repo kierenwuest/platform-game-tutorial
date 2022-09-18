@@ -79,7 +79,7 @@ function screenCollideMsg() {
     ctx.fillStyle = "red";
     ctx.fillRect(mx - 50, my - 50, 100, 100);
   }
-
+  ctx.strokeStyle = "black";
   ctx.strokeRect(rect1.x, rect1.y, rect1.width, rect1.height);
   ctx.strokeRect(mx - 50, my - 50, 100, 100);
 }
