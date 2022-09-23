@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Collision Detection Project</title>
+        <meta name="description" content="Learning game project">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style3.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/github.min.css">
+        <style> @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap'); </style>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="container">
+            <a href="index.html">Home</a>
+            <canvas class="clear" id="third1"></canvas>
+            <a href="lesson4_1.html">Next</a>
+            <!-- <div class="playControls">
+            </div> -->
+            <p>My Code:</p>
+            <div id="codeblock">
+                <pre><code class="language-javascript">
+    /** @type {HTMLCanvasElement} */
+
+    // Sounds: https://freesound.org/people/nfrae/sounds/167242/
+    
+    const canvas = document.getElementById("third1");
+    const ctx = canvas.getContext("2d");
+    CANVAS_WIDTH = canvas.width = 928;
+    CANVAS_HEIGHT = canvas.height = 793;
+    
+    const explosions = [];
+    
+    class Explosion {
+        constructor(x, y) {
+        this.spritewidth = 64;
+        this.spriteheight = 64;
+        this.spriteScale = 2.4;
+        this.width = this.spritewidth * this.spriteScale;
+        this.height = this.spriteheight * this.spriteScale;
+        this.x = x;
+        this.y = y;
+        this.image = new Image();
+        this.image.src = "images/firework.png";
+        this.frame = 0;
+        this.timer = 0;
+        this.angle = Math.random() * 6.2;
+        this.sound = new Audio();
+        this.sound.src = "images/firework.mp3";
+        this.soundb = new Audio();
+        this.soundb.src = "images/explodeBass.mp3";
+        // this.originx = CANVAS_WIDTH * 0.5;
+        // this.originy = CANVAS_HEIGHT;
+        
+        }
+        update() {
+        if (this.frame === 0) this.sound.play(); //play the sound once
+        if (this.frame === 4) this.soundb.play(); //play the sound once
+        this.timer++;
+        if (this.timer % 3 === 0) {
+            this.frame++;
+        }
+        }
+        draw() {
+        // ctx.strokeStyle = 'white';
+    
+        // ctx.beginPath();
+        // ctx.moveTo(this.originx, this.originy);
+        // ctx.lineTo(this.x, this.y);
+        // ctx.stroke();
+    
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.drawImage(
+            this.image,
+            this.spritewidth * this.frame,
+            0,
+            this.spritewidth,
+            this.spriteheight,
+            0 - this.width * 0.5,
+            0 - this.height * 0.5,
+            this.width,
+            this.height
+        );
+        ctx.restore();
+        }
+    }
+    
+    const rockets = [];
+    
+    class Rocket {
+        constructor(x,y) {
+        this.ox = CANVAS_WIDTH * 0.5; //Orgin X
+        this.oy = CANVAS_HEIGHT; // Origin Y
+        this.x = x;
+        this.y = y;
+        this.frame = 0;
+        this.timer = 0;
+        this.dx = this.x - this.ox;
+        this.dy = this.y - this.oy;
+        this.dl = Math.floor(Math.sqrt(this.dx * this.dx + this.dy * this.dy));
+        this.dlSteps = 0; 
+    
+        this.soundl = new Audio();
+        this.soundl.src = "images/launch.mp3";
+        this.soundw = new Audio();
+        this.soundw.src = "images/whistle.mp3";
+    
+        }
+        update () {
+        this.timer++;
+        
+        // if (this.timer % 3 === 0) {
+        //   this.frame++;
+        // }
+        
+        for (let i=0; i < this.dlSteps ; i++ ) {
+            this.frame++;
+        }
+    
+        // this.frame++;
+    
+    
+        }
+        draw () {
+        ctx.strokeStyle = 'white';
+    
+        ctx.strokeRect(this.x - 10 , this.y - 10 , 20 , 20);
+    
+        ctx.beginPath();
+        ctx.moveTo(this.ox, this.oy);
+        ctx.lineTo(this.x, this.y);
+        ctx.stroke();
+    
+        console.log("rocket distance: " + this.dl);
+        console.log("frame: " + this.frame);
+        console.log("timer: " + this.timer);
+        }
+    
+    }
+    
+    canvas.addEventListener("click", function (e) {
+        createAnimation(e);
+    });
+    
+    // canvas.addEventListener('mousemove', function (e){
+    //     createAnimation(e);
+    // });
+    
+    function createAnimation(e) {
+        let mx = e.offsetX;
+        let my = e.offsetY;
+        explosions.push(new Explosion(mx, my));
+        rockets.push(new Rocket (mx,my));
+    
+    }
+    
+    function animationLoop() {
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    
+    // if rocket has finshed animating
+    
+        for (let i = 0; i < rockets.length; i++) {
+        //rockets[i].update();
+        rockets[i].draw();
+        console.log(rockets);
+        if (rockets[i].frame === 0) {
+            rockets.splice(i, 1);
+            i--;
+        }
+        }
+    
+        // then fire explosion
+    
+        for (let i = 0; i < explosions.length; i++) {
+        explosions[i].update();
+        explosions[i].draw();
+        if (explosions[i].frame > 29) {
+            explosions.splice(i, 1);
+            i--;
+        }
+        }
+        requestAnimationFrame(animationLoop);
+    }
+    
+    animationLoop();   
+                </code></pre>
+
+        <script src="scripts/lesson4_test.js" async defer></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </body>
+</html>
